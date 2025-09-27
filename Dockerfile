@@ -1,6 +1,6 @@
 # Multi-stage build για βελτιστοποίηση
 # Stage 1: Build stage
-FROM eclipse-temurin:21-jdk-jammy AS builder
+FROM eclipse-temurin:17-jdk-jammy AS builder
 
 # Εγκατάσταση Gradle
 RUN apt-get update && \
@@ -24,7 +24,7 @@ COPY src/ src/
 RUN gradle clean bootJar --no-daemon
 
 # Stage 2: Runtime stage
-FROM eclipse-temurin:21-jre-jammy
+FROM eclipse-temurin:17-jre-jammy
 
 # Δημιουργία non-root user για ασφάλεια
 RUN groupadd -r spring && useradd -r -g spring spring
