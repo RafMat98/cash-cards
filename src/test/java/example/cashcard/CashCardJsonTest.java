@@ -11,8 +11,10 @@ import org.springframework.boot.test.json.JacksonTester;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.test.context.ActiveProfiles;
 
 @JsonTest
+@ActiveProfiles("test")
 class CashCardJsonTest {
 
     @Autowired
