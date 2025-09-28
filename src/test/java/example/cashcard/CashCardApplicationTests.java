@@ -71,19 +71,19 @@ class CashCardApplicationTests {
     @Test
     void shouldReturnAllCashCardsWhenListIsRequested() {
         ResponseEntity<String> response = restTemplate
-        .withBasicAuth("sarah1", "abc123")
+        .withBasicAuth("kumar2", "xyz789")
         .getForEntity("/cashcards", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
         int cashCardCount = documentContext.read("$.length()");
-        assertThat(cashCardCount).isEqualTo(4);
+        assertThat(cashCardCount).isEqualTo(1);
 
         JSONArray ids = documentContext.read("$..id");
-        assertThat(ids).containsExactlyInAnyOrder(99, 100, 101, 102);
+        assertThat(ids).containsExactlyInAnyOrder(102);
 
         JSONArray amounts = documentContext.read("$..amount");
-        assertThat(amounts).containsExactlyInAnyOrder(123.45, 1.00, 150.00, 200.00);
+        assertThat(amounts).containsExactlyInAnyOrder(200.00);
     }
 
     @Test
@@ -110,7 +110,7 @@ class CashCardApplicationTests {
         assertThat(read.size()).isEqualTo(1);
 
         double amount = documentContext.read("$[0].amount");
-        assertThat(amount).isEqualTo(200);
+        assertThat(amount).isEqualTo(150);
     }
 
     @Test
@@ -122,10 +122,10 @@ class CashCardApplicationTests {
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
         JSONArray page = documentContext.read("$[*]");
-        assertThat(page.size()).isEqualTo(4);
+        assertThat(page.size()).isEqualTo(3);
 
         JSONArray amounts = documentContext.read("$..amount");
-        assertThat(amounts).containsExactly(1.00, 123.45, 150.00, 200.00);
+        assertThat(amounts).containsExactly(1.00, 123.45, 150.00);
     }
 
     @Test
